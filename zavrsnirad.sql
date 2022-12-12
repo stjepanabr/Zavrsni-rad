@@ -7,44 +7,34 @@ create table osoba(
     ime varchar(50) not null,
     prezime varchar(50) not null,
     email varchar(50) not null,
-    oib char(11)
+    oib char(11),
+    administrator boolean,
+    pozicija_u_klubu varchar(50) not null
+
 );
 
-create table administrator(
-    sifra int not null primary key auto_increment,
-    osoba int
-);
-
-create table clan(
-    sifra int not null primary key auto_increment,
-    osoba int,
-    igrac boolean
-);
 
 create table clanak(
     sifra int not null primary key auto_increment,
     naslov varchar(50),
     tekst text,
-    administrator int
+    osoba int
+    
 );
 
 create table komentar(
     sifra int not null primary key auto_increment,
     tekstkomentara varchar(50),
     clanak int,
-    clan int,
-    administrator int
+    osoba int
+    
 );
 
-alter table clan add foreign key (osoba) references osoba(sifra);
 
-alter table administrator add foreign key (osoba) references osoba(sifra);
 
-alter table clanak add foreign key (administrator) references administrator(sifra);
+alter table clanak add foreign key (osoba) references osoba(sifra);
 
 alter table komentar add foreign key (clanak) references clanak(sifra);
 
-alter table komentar add foreign key (administrator) references administrator(sifra);
-
-alter table komentar add foreign key (clan) references clan(sifra);
+alter table komentar add foreign key (osoba) references osoba(sifra);
 
